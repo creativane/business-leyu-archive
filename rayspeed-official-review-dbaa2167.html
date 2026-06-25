@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雷速 · 信息索引与资料整理</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f6fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            padding: 2rem 1.2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* 主视觉 —— 信息卡片式头图 */
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: #0b3b2c;
+            background: linear-gradient(135deg, #0f766e, #2b9a8c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero .sub {
+            font-size: 1.1rem;
+            color: #3b5e5a;
+            max-width: 600px;
+            margin: 0.8rem auto 1.8rem;
+            font-weight: 350;
+        }
+
+        .hero .grid-tag {
+            display: inline-block;
+            background: #e0f0ed;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            color: #1a6b60;
+            border: 1px solid #b2ddd6;
+            margin-bottom: 1rem;
+        }
+
+        /* 网格卡片系统 */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 1.8rem 1.5rem 2rem;
+            box-shadow: 0 8px 20px rgba(17, 84, 74, 0.06);
+            border: 1px solid #d7ece8;
+            transition: box-shadow 0.2s, transform 0.15s;
+        }
+
+        .card:hover {
+            box-shadow: 0 12px 30px rgba(18, 100, 85, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .card .icon-em {
+            display: inline-block;
+            font-size: 2rem;
+            margin-bottom: 0.6rem;
+            line-height: 1;
+        }
+
+        .card h3 {
+            font-size: 1.35rem;
+            font-weight: 500;
+            color: #0b3b2c;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: #2f4e49;
+            font-size: 0.98rem;
+            margin: 0.6rem 0;
+        }
+
+        .card .feature-tag {
+            display: inline-block;
+            background: #ddf1ed;
+            font-size: 0.75rem;
+            padding: 0.15rem 0.9rem;
+            border-radius: 40px;
+            color: #13645a;
+            margin-right: 0.3rem;
+            margin-top: 0.5rem;
+        }
+
+        /* 适合人群 — 信息索引风格 */
+        .audience-section {
+            background: #e8f5f1;
+            border-radius: 40px;
+            padding: 2rem 1.8rem;
+            margin: 2.8rem 0;
+            border: 1px solid #c1e2db;
+        }
+
+        .audience-section h2 {
+            font-size: 1.6rem;
+            font-weight: 470;
+            color: #0b4c40;
+            margin-bottom: 0.3rem;
+        }
+
+        .audience-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 0.4rem;
+            margin-top: 1.5rem;
+        }
+
+        .audience-item {
+            background: white;
+            padding: 0.5rem 1.5rem 0.5rem 1rem;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            border: 1px solid #add4cc;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .audience-item .badge {
+            background: #0f766e;
+            color: white;
+            width: 1.4rem;
+            height: 1.4rem;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        /* 自然链接段落 */
+        .link-paragraph {
+            background: white;
+            border-radius: 30px;
+            padding: 2rem 2rem 2.2rem;
+            margin: 2rem 0 3rem;
+            border-left: 6px solid #2b9a8c;
+            box-shadow: 0 4px 16px rgba(15, 118, 110, 0.05);
+        }
+
+        .link-paragraph p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            color: #1f3f3a;
+        }
+
+        .link-paragraph a {
+            color: #0f766e;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid #b2ddd6;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .link-paragraph a:hover {
+            border-bottom-color: #0f766e;
+            color: #064e44;
+        }
+
+        /* FAQ 摘要 — 资料整理风格 */
+        .faq-mini {
+            background: #ffffffdd;
+            backdrop-filter: blur(2px);
+            border-radius: 28px;
+            padding: 1.6rem 1.8rem;
+            border: 1px solid #cce7e1;
+            margin: 1.2rem 0 2.4rem;
+        }
+
+        .faq-mini h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #0b3b2c;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .faq-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px dashed #cde3de;
+            padding-bottom: 0.9rem;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .faq-q {
+            font-weight: 470;
+            color: #0b4c40;
+            font-size: 0.98rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .faq-q::before {
+            content: "▹";
+            color: #1f8f80;
+        }
+
+        .faq-a {
+            color: #2b544c;
+            font-size: 0.92rem;
+            margin-top: 0.2rem;
+            padding-left: 1.4rem;
+        }
+
+        /* 提示卡片 */
+        .tip-box {
+            background: #eaf9f6;
+            border-radius: 20px;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid #b4ddd2;
+            margin: 2rem 0;
+        }
+
+        .tip-box strong {
+            color: #0b6b5c;
+        }
+
+        /* 页脚 */
+        .footer-note {
+            margin-top: 3.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #58837b;
+            border-top: 1px solid #d1e7e1;
+            padding-top: 1.8rem;
+            letter-spacing: 0.02em;
+        }
+
+        /* 响应式细化 */
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem 0.9rem;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .grid-cards {
+                gap: 1.2rem;
+            }
+            .card {
+                padding: 1.4rem 1.2rem 1.6rem;
+            }
+            .audience-section {
+                padding: 1.5rem 1.2rem;
+            }
+            .audience-item {
+                font-size: 0.85rem;
+                padding: 0.3rem 1rem 0.3rem 0.6rem;
+            }
+            .link-paragraph {
+                padding: 1.5rem 1.2rem;
+            }
+            .faq-mini {
+                padding: 1.2rem 1rem;
+            }
+        }
+
+        @media (min-width: 900px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .grid-cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- hero 主视觉 信息索引角度 -->
+        <div class="hero">
+            <span class="grid-tag">📇 资料整理 · 信息卡片</span>
+            <h1>雷速 · 内容索引与结构</h1>
+            <div class="sub">将分散的资料归拢为可浏览的卡片，在一处完成信息查阅与方向判断</div>
+        </div>
+
+        <!-- 用途卡片：信息整理场景 -->
+        <div class="grid-cards">
+            <div class="card">
+                <div class="icon-em">📂</div>
+                <h3>知识归档</h3>
+                <p>按主题、日期、标签整理笔记与文章，建立个人资料库，方便后续检索与回顾。</p>
+                <span class="feature-tag">分类</span>
+                <span class="feature-tag">标签</span>
+                <span class="feature-tag">摘要</span>
+            </div>
+            <div class="card">
+                <div class="icon-em">🔖</div>
+                <h3>链接与资源管理</h3>
+                <p>汇集常用链接、文档与参考信息，以卡片形式展示摘要，避免重复查找，提升信息利用效率。</p>
+                <span class="feature-tag">书签</span>
+                <span class="feature-tag">快照</span>
+            </div>
+            <div class="card">
+                <div class="icon-em">🧩</div>
+                <h3>项目背景卡片</h3>
+                <p>为每个项目或兴趣方向建立独立卡片，记录关键节点、参考资料及进度脉络，一目了然。</p>
+                <span class="feature-tag">里程碑</span>
+                <span class="feature-tag">备注</span>
+            </div>
+        </div>
+
+        <!-- 适合人群 — 侧重信息索引角色 -->
+        <div class="audience-section">
+            <h2>适合这些资料整理需求</h2>
+            <div class="audience-grid">
+                <span class="audience-item"><span class="badge">1</span> 内容整理者</span>
+                <span class="audience-item"><span class="badge">2</span> 轻度知识管理</span>
+                <span class="audience-item"><span class="badge">3</span> 兴趣研究者</span>
+                <span class="audience-item"><span class="badge">4</span> 文档归集者</span>
+                <span class="audience-item"><span class="badge">5</span> 笔记爱好者</span>
+                <span class="audience-item"><span class="badge">6</span> 信息索引新手</span>
+            </div>
+            <p style="margin-top: 1.8rem; color: #1b5349; font-size: 0.98rem; max-width: 600px;">
+                无论你是刚开始整理网络资料，还是希望把手边的信息碎片变成可翻阅的卡片，基于索引的思路都能让素材更清晰。
+            </p>
+        </div>
+
+        <!-- 自然链接段落：将「雷速」嵌入流畅叙述 -->
+        <div class="link-paragraph">
+            <p>
+                如果你经常需要把不同来源的资料聚合到一起，建立一个可以快速浏览的索引页会很有帮助。
+                很多使用者在整理信息的过程中，会以<a href="https://rayspeed-official-leisu.com">雷速</a>作为内容组织的参考空间，
+                将零散的书签、笔记和待读文章按照卡片形式排列，方便自己定期回顾与筛选。
+            </p>
+        </div>
+
+        <!-- FAQ 摘要 — 资料索引常见思路 -->
+        <div class="faq-mini">
+            <h3>📌 信息索引常见思路</h3>
+            <div class="faq-item">
+                <span class="faq-q">卡片之间如何建立关联？</span>
+                <span class="faq-a">可以通过共用的标签、主题分类或手动添加的“相关卡片”链接，形成简单的知识网络。</span>
+            </div>
+            <div class="faq-item">
+                <span class="faq-q">最适合存放什么类型的资料？</span>
+                <span class="faq-a">适合短篇笔记、摘要、参考链接片段、以及需要快速浏览的说明性内容，避免大文件直接嵌入。</span>
+            </div>
+            <div class="faq-item">
+                <span class="faq-q">索引页面需要频繁更新吗？</span>
+                <span class="faq-a">根据个人习惯，每次新增资料时顺手建立一张卡片即可；也可以每周简单回顾，保持结构整洁。</span>
+            </div>
+        </div>
+
+        <!-- 提示卡片 -->
+        <div class="tip-box">
+            <strong>💡 整理思路：</strong> 试着把一个大主题拆成 3～5 张卡片，每张卡片只聚焦一个子方向，并通过统一的标签建立索引。
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer-note">
+            基于信息卡片与资料整理的角度 · 内容索引参考
+        </div>
+    </div>
+</body>
+</html>
